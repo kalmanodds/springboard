@@ -43,6 +43,9 @@ Springboard reads `/var/run/docker.sock` at request-time (server-side, no cachin
 - `src/pages/index.astro` — SSR page, zero client JS
 - `docker-compose.yml` — mounts `/var/run/docker.sock:ro`, includes 6 example services
 
+## TODO
+- Create a public Docker registry account (Docker Hub or GHCR) and set up automated image builds so users can use `image: username/springboard:latest` instead of building from source. Update the README and docker-compose accordingly.
+
 ## Git commits
 - Do NOT add `Co-Authored-By` trailers for AI agents in commit messages
 

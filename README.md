@@ -12,12 +12,12 @@ Springboard mounts the Docker socket and reads container labels at request time.
 
 ## Adding Springboard to your stack
 
-Add the following service to your existing `docker-compose.yml`:
+Clone the repo and add a `springboard` service to your existing `docker-compose.yml`:
 
 ```yaml
 services:
   springboard:
-    image: ghcr.io/yourusername/springboard:latest
+    build: /path/to/springboard
     ports:
       - "4321:4321"
     volumes:
@@ -28,7 +28,7 @@ services:
       PORT: 4321
 ```
 
-Then visit `http://<your-server-ip>:4321`.
+Then visit `http://localhost:4321`.
 
 ## Labelling your services
 
@@ -43,7 +43,7 @@ services:
       dash.name: "Plex"
       dash.category: "Media"
       dash.icon: "simple-icons:plex"
-      dash.url: "http://192.168.1.50:32400"
+      dash.url: "http://localhost:32400"
       dash.description: "Media server"
 ```
 
