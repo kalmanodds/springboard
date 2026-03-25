@@ -12,6 +12,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.0.8"
-  }
+    "@astrojs/node": "^10.0.0",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.75",
+    "astro": "^6.0.8",
+    "astro-icon": "^1.1.5",
+    "dockerode": "^4.0.10"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/dockerode": "^3.3.47",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2"
+  },
+  "trustedDependencies": [
+    "protobufjs"
+  ]
 }

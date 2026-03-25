@@ -1,0 +1,20 @@
+---
+import type { App } from '../lib/types';
+import AppTile from './AppTile.astro';
+
+interface Props {
+  category: string;
+  apps: App[];
+}
+
+const { category, apps } = Astro.props;
+---
+
+<section>
+  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">
+    {category}
+  </h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    {apps.map(app => <AppTile app={app} />)}
+  </div>
+</section>

@@ -1,0 +1,79 @@
+services:
+  springboard:
+    build: .
+    ports:
+      - "4321:4321"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4321
+
+  # --- Example apps with dash labels ---
+  # These stand in for real services during development.
+  # traefik/whoami is ~3MB and starts instantly.
+
+  plex:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Plex"
+      dash.category: "Media"
+      dash.icon: "simple-icons:plex"
+      dash.url: "http://localhost:32400"
+      dash.description: "Media server"
+
+  sonarr:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Sonarr"
+      dash.category: "Media"
+      dash.icon: "mdi:television-play"
+      dash.url: "http://localhost:8989"
+      dash.description: "TV series manager"
+
+  radarr:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Radarr"
+      dash.category: "Media"
+      dash.icon: "mdi:movie-open"
+      dash.url: "http://localhost:7878"
+      dash.description: "Movie manager"
+
+  portainer:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Portainer"
+      dash.category: "System"
+      dash.icon: "simple-icons:portainer"
+      dash.url: "http://localhost:9000"
+      dash.description: "Container management"
+
+  prometheus:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Prometheus"
+      dash.category: "System"
+      dash.icon: "simple-icons:prometheus"
+      dash.url: "http://localhost:9090"
+      dash.description: "Metrics collection"
+
+  pihole:
+    image: traefik/whoami
+    labels:
+      dash.enable: "true"
+      dash.name: "Pi-hole"
+      dash.category: "Network"
+      dash.icon: "simple-icons:pihole"
+      dash.url: "http://localhost:8080"
+      dash.description: "DNS ad blocker"
+
+  # This one intentionally has no dash.enable label — should not appear
+  ghost:
+    image: traefik/whoami

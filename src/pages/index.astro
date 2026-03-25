@@ -1,11 +1,40 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getDashboardApps } from '../lib/docker';
+import CategorySection from '../components/CategorySection.astro';
+import '../styles/global.css';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const groups = await getDashboardApps();
+const categories = Object.entries(groups);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Springboard</title>
+  </head>
+  <body class="bg-gray-950 text-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+      <header class="mb-10">
+        <h1 class="text-2xl font-bold tracking-tight text-white">Springboard</h1>
+        <p class="text-sm text-gray-500 mt-1">Home server dashboard</p>
+      </header>
+
+      <main class="space-y-10">
+        {categories.length === 0 ? (
+          <div class="flex flex-col items-center justify-center py-24 text-center">
+            <p class="text-gray-400 text-lg font-medium">No apps found</p>
+            <p class="text-gray-600 text-sm mt-2">
+              Add <code class="bg-gray-800 text-gray-300 px-1.5 py-0.5 rounded text-xs">dash.enable=true</code> labels to your containers
+            </p>
+          </div>
+        ) : (
+          categories.map(([category, apps]) => (
+            <CategorySection category={category} apps={apps} />
+          ))
+        )}
+      </main>
+    </div>
+  </body>
+</html>

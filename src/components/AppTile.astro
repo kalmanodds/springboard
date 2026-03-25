@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+import StatusDot from './StatusDot.astro';
+import type { App } from '../lib/types';
+
+interface Props {
+  app: App;
+}
+
+const { app } = Astro.props;
+---
+
+<a
+  href={app.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group flex flex-col items-center gap-3 rounded-xl bg-gray-900 border border-gray-800 p-5
+         hover:border-indigo-500 hover:bg-gray-800 transition-all duration-200 cursor-pointer"
+>
+  <div class="relative">
+    <Icon
+      name={app.icon}
+      class="w-10 h-10 text-gray-300 group-hover:text-white transition-colors duration-200"
+    />
+    <StatusDot status={app.status} />
+  </div>
+  <div class="text-center">
+    <p class="text-sm font-medium text-gray-100 leading-snug">{app.name}</p>
+    {app.description && (
+      <p class="text-xs text-gray-500 mt-0.5 leading-snug">{app.description}</p>
+    )}
+  </div>
+</a>

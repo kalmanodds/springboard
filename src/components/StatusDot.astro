@@ -1,0 +1,18 @@
+---
+interface Props {
+  status: 'running' | 'exited' | 'paused';
+}
+
+const { status } = Astro.props;
+
+const colorMap = {
+  running: 'bg-green-500',
+  paused: 'bg-yellow-400',
+  exited: 'bg-red-500',
+} as const;
+---
+
+<span
+  class={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full ${colorMap[status]} ${status === 'running' ? 'animate-pulse' : ''}`}
+  title={status}
+/>
