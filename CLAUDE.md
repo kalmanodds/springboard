@@ -43,6 +43,9 @@ Springboard reads `/var/run/docker.sock` at request-time (server-side, no cachin
 - `src/pages/index.astro` — SSR page, zero client JS
 - `docker-compose.yml` — mounts `/var/run/docker.sock:ro`, includes 6 example services
 
+## Git commits
+- Do NOT add `Co-Authored-By` trailers for AI agents in commit messages
+
 ## Example label config
 ```yaml
 labels:
