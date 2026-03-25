@@ -16,8 +16,9 @@ services:
 
   plex:
     image: traefik/whoami
+    command: --port 32400
     ports:
-      - "32400:80"
+      - "32400:32400"
     labels:
       dash.enable: "true"
       dash.name: "Plex"
@@ -28,8 +29,9 @@ services:
 
   sonarr:
     image: traefik/whoami
+    command: --port 8989
     ports:
-      - "8989:80"
+      - "8989:8989"
     labels:
       dash.enable: "true"
       dash.name: "Sonarr"
@@ -40,8 +42,9 @@ services:
 
   radarr:
     image: traefik/whoami
+    command: --port 7878
     ports:
-      - "7878:80"
+      - "7878:7878"
     labels:
       dash.enable: "true"
       dash.name: "Radarr"
@@ -52,8 +55,9 @@ services:
 
   portainer:
     image: traefik/whoami
+    command: --port 9000
     ports:
-      - "9000:80"
+      - "9000:9000"
     labels:
       dash.enable: "true"
       dash.name: "Portainer"
@@ -64,8 +68,9 @@ services:
 
   prometheus:
     image: traefik/whoami
+    command: --port 9090
     ports:
-      - "9090:80"
+      - "9090:9090"
     labels:
       dash.enable: "true"
       dash.name: "Prometheus"
@@ -76,8 +81,9 @@ services:
 
   pihole:
     image: traefik/whoami
+    command: --port 8080
     ports:
-      - "8080:80"
+      - "8080:8080"
     labels:
       dash.enable: "true"
       dash.name: "Pi-hole"

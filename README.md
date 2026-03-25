@@ -1,46 +1,74 @@
-# Astro Starter Kit: Basics
+# Springboard
 
-```sh
-bun create astro@latest -- --template basics
+![Springboard banner](assets/banner.jpg)
+
+A home server dashboard that keeps itself up to date automatically. Add a few lines to any container in your stack and it shows up on the dashboard — grouped, linked, and with a live status indicator. No config files, no manual lists.
+
+## How it works
+
+Springboard mounts the Docker socket and reads container labels at request time. Any container with the right labels appears on the dashboard, grouped by category, with a live status indicator.
+
+## Adding Springboard to your stack
+
+Add the following service to your existing `docker-compose.yml`:
+
+```yaml
+services:
+  springboard:
+    image: ghcr.io/yourusername/springboard:latest
+    ports:
+      - "4321:4321"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Then visit `http://<your-server-ip>:4321`.
 
-## 🚀 Project Structure
+## Labelling your services
 
-Inside of your Astro project, you'll see the following folders and files:
+To make a container appear on the dashboard, add `dash.*` labels to it:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```yaml
+services:
+  plex:
+    image: plexinc/pms-docker
+    labels:
+      dash.enable: "true"
+      dash.name: "Plex"
+      dash.category: "Media"
+      dash.icon: "simple-icons:plex"
+      dash.url: "http://192.168.1.50:32400"
+      dash.description: "Media server"
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Available labels
 
-## 🧞 Commands
+| Label | Required | Description |
+|---|---|---|
+| `dash.enable` | Yes — must be `"true"` | Opt-in to the dashboard |
+| `dash.name` | Yes | Display name on the tile |
+| `dash.category` | Yes | Groups tiles under a shared heading |
+| `dash.url` | Yes | Where the tile links to |
+| `dash.icon` | Yes | Iconify icon identifier, e.g. `mdi:plex` or `simple-icons:grafana` |
+| `dash.description` | No | Short subtext shown below the name |
 
-All commands are run from the root of the project, from a terminal:
+Icons are sourced from [Iconify](https://icon-sets.iconify.design/) — search there to find the right identifier for your app.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+## Running locally (development)
 
-## 👀 Want to learn more?
+```bash
+bun install
+bun run dev     # dev server on :4321
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+To spin up Springboard alongside a set of example labelled containers:
+
+```bash
+docker compose up --build -d
+```
+
+This starts Springboard and six placeholder services so you can see the dashboard populated without needing real apps running.
