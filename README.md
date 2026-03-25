@@ -8,6 +8,8 @@ A home server dashboard that keeps itself up to date automatically. Add a few li
 
 Springboard mounts the Docker socket and reads container labels at request time. Any container with the right labels appears on the dashboard, grouped by category, with a live status indicator.
 
+![Screenshot](assets/screenshot.png)
+
 ## Adding Springboard to your stack
 
 Add the following service to your existing `docker-compose.yml`:
