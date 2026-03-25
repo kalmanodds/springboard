@@ -11,25 +11,22 @@ services:
       PORT: 4321
 
   # --- Example apps with dash labels ---
-  # These stand in for real services during development.
-  # traefik/whoami is ~3MB and starts instantly.
+  # These use real images so clicking tiles opens an actual web UI.
 
-  plex:
-    image: traefik/whoami
-    command: --port 32400
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
     ports:
-      - "32400:32400"
+      - "8096:8096"
     labels:
       dash.enable: "true"
-      dash.name: "Plex"
+      dash.name: "Jellyfin"
       dash.category: "Media"
-      dash.icon: "simple-icons:plex"
-      dash.url: "http://localhost:32400"
+      dash.icon: "simple-icons:jellyfin"
+      dash.url: "http://localhost:8096"
       dash.description: "Media server"
 
   sonarr:
-    image: traefik/whoami
-    command: --port 8989
+    image: lscr.io/linuxserver/sonarr:latest
     ports:
       - "8989:8989"
     labels:
@@ -41,8 +38,7 @@ services:
       dash.description: "TV series manager"
 
   radarr:
-    image: traefik/whoami
-    command: --port 7878
+    image: lscr.io/linuxserver/radarr:latest
     ports:
       - "7878:7878"
     labels:
@@ -53,22 +49,22 @@ services:
       dash.url: "http://localhost:7878"
       dash.description: "Movie manager"
 
-  portainer:
-    image: traefik/whoami
-    command: --port 9000
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    environment:
+      - WEBUI_PORT=8080
     ports:
-      - "9000:9000"
+      - "8080:8080"
     labels:
       dash.enable: "true"
-      dash.name: "Portainer"
-      dash.category: "System"
-      dash.icon: "simple-icons:portainer"
-      dash.url: "http://localhost:9000"
-      dash.description: "Container management"
+      dash.name: "qBittorrent"
+      dash.category: "Downloads"
+      dash.icon: "simple-icons:qbittorrent"
+      dash.url: "http://localhost:8080"
+      dash.description: "Torrent client"
 
   prometheus:
-    image: traefik/whoami
-    command: --port 9090
+    image: prom/prometheus:latest
     ports:
       - "9090:9090"
     labels:
@@ -79,19 +75,18 @@ services:
       dash.url: "http://localhost:9090"
       dash.description: "Metrics collection"
 
-  pihole:
-    image: traefik/whoami
-    command: --port 8080
+  grafana:
+    image: grafana/grafana:latest
     ports:
-      - "8080:8080"
+      - "3000:3000"
     labels:
       dash.enable: "true"
-      dash.name: "Pi-hole"
-      dash.category: "Network"
-      dash.icon: "simple-icons:pihole"
-      dash.url: "http://localhost:8080"
-      dash.description: "DNS ad blocker"
+      dash.name: "Grafana"
+      dash.category: "System"
+      dash.icon: "simple-icons:grafana"
+      dash.url: "http://localhost:3000"
+      dash.description: "Metrics dashboard"
 
   # This one intentionally has no dash.enable label — should not appear
-  ghost:
-    image: traefik/whoami
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
