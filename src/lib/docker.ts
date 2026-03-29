@@ -4,7 +4,9 @@ import type { App, GroupedApps } from './types';
 const docker = new Dockerode(
   process.env.DOCKER_HOST
     ? { host: process.env.DOCKER_HOST }
-    : { socketPath: '/var/run/docker.sock' }
+    : process.platform === 'win32'
+      ? { socketPath: '//./pipe/docker_engine' }
+      : { socketPath: '/var/run/docker.sock' }
 );
 
 function parseStatus(state: string): App['status'] {
